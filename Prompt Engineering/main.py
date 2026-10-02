@@ -1,19 +1,37 @@
+from groq import generate_response
+def run_activity():
+    print("Zero-Shot,One-Shot,Few-Shot Activity")
+    category=input("Enter a category(eg.animal,food,science,etc): ").strip()
+    item=input(f"Enter a specific {category} to classify: ")
+    if not category or not item:
+        print("Please fill all the fields")
+        return
+    zero_shot=f"is {item} a {category}? Answer yes or no"
+    print("\n---Zero Shot Learning---\n")
+    print(f"Response: {generate_response(zero_shot,temperature=0.3,max_tokens=1024)}")
+    one_shot=f"""Example:
+    Category: fruit
+    Item: apple
+    Answer: Yes, apple is a fruit
+    Now you try:
+    category: {category}
+    item:{item}
+    answer:"""
+    print("\n---One Shot Learning---\n")
+    print(f"Response: {generate_response(one_shot,temperature=0.3,max_tokens=1024)}")
+    few_shot=f"""Example:
+    Category: fruit
+    Item: apple
+    Answer: Yes, apple is a fruit
+    Now you try:
+    category: {category}
+    item:{item}
+    answer:"""
 
-from groq import generate_response 
-def prompt_engineering_activity():
-  print("Welcome to the AI Prompt Engineering Tutorial!")
-  vague = input("Enter a vague prompt: ")
-  print("\nAI's response to vague prompt:")
-  print(generate_response(vague))
-  specific = input("\nNow, make it more specific: ")
-  print("\nAI's response to specific prompt:")
-  print(generate_response(specific))
-  context = input("\nNow, add context to your specific prompt: ")
-  print("\nAI's response to contextual prompt:")
-  print(generate_response(context))
-  print("\n--- Reflection ---")
-  print("1. How did the AI's response change when the prompt was made more specific?")
-  print("2. How did the AI's response improve with the added context?")
-  print("3. Which prompt produced the most relevant and tailored response? Why?")
+    print("\n---Few Shot Learning---\n")
+    print(f"Response: {generate_response(few_shot,temperature=0.3,max_tokens=1024)}")
 if __name__ == "__main__":
-  prompt_engineering_activity()
+    run_activity()
+
+
+    
